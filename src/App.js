@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import { render } from '@testing-library/react';
+import Header from './components/Header';
 
-function App() {
-  return "abc"
+class App extends Component {
+  render(){
+    return(
+    <div>
+      <Header></Header>
+    </div>);
+  }
 }
 
 export default App;
