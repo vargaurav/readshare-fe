@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Header from './Header';
 import Background from '../images/bck.jpg';
+import './Books.scss';
 
 var sectionStyle = {
     width: "100%",
@@ -14,7 +15,8 @@ class Books extends Component {
         this.state = {
             error: null,
             isLoaded: false,
-            items: []
+            items: [],
+            hideMore: {},
         };
     }
     componentDidMount() {
@@ -43,32 +45,57 @@ class Books extends Component {
             }
           )
       }
+
+      more=(hideId)=>{
+        console.log("hideId: ", hideId);
+        this.setState({
+          hideMore: {
+            ...this.state.hideMore,
+            [hideId]: true,
+          }
+        })
+      }
+
       render() {
-        const { error, isLoaded, items } = this.state;
+        const { error, isLoaded, items, hideMore } = this.state;
         if (error) {
           return <div>Error: {error.message}</div>;
         } else if (!isLoaded) {
           return <div>Loading...</div>;
         } else {
           return (
-            <div>
-            <table>
-            <tbody>
+            <div className={"books"}>
+            
+            
             {items.content_info.map((data, key) => {
-               return (
-                   <table style={{marginLeft: '120px', marginRight: '120px'}}>
-                       <tr>
-                          <td>{items.book_info[data.book_id]}     |     </td>
-                          <td>{items.user_info[data.user_id]}</td>
-                       </tr>
-                       <tr>
-                          <td style={sectionStyle}>{data.content}</td>
-                       </tr>
-                   </table>
-               )
+              const bookId = items.book_info[data.book_id],
+                    userId = items.user_info[data.user_id],
+                    id = `${userId}_${bookId}`;
+              return (
+                <div id={id} className={"box"}>
+                  <h2>{bookId}</h2>
+                  <span>{userId}</span>
+                  <p className={!hideMore[id] && "hider"}>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus aspernatur excepturi perferendis, corrupti minima cum repellat labore mollitia architecto quam ad nulla soluta atque hic veritatis assumenda. Nihil, alias deserunt.
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus aspernatur excepturi perferendis, corrupti minima cum repellat labore mollitia architecto quam ad nulla soluta atque hic veritatis assumenda. Nihil, alias deserunt.
+                  </p>
+                  {!hideMore[id] && <a className={"more"} onClick={()=>this.more(id)}>more</a>}
+                </div>
+              )
+              //  return (
+              //      <table style={{marginLeft: '120px', marginRight: '120px'}}>
+              //          <tr>
+              //             <td>{items.book_info[data.book_id]}     |     </td>
+              //             <td>{items.user_info[data.user_id]}</td>
+              //          </tr>
+              //          <tr>
+              //             <td style={sectionStyle}>{data.content}</td>
+              //          </tr>
+              //      </table>
+              //  )
             })}
-            </tbody>
-            </table></div>
+            
+            </div>
           );
         }
       }
