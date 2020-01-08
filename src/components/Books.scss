@@ -1,0 +1,29 @@
+$error: red;
+
+.books{
+    .box{
+        border: 1px solid red;
+        margin-bottom: 40px;
+        padding: 10px;
+        span {
+            display: inline-block;
+            border: 1px solid blue;
+            font-weight: 200;
+            font-size: small;
+            margin-bottom: 7px;
+        }
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            transition: max-height 2s ease-in-out;
+        }
+        .hider {
+            max-height: 50px;
+            height: auto;
+            overflow:hidden;
+        }
+        .more {
+            color: blue;
+        }
+    }
+}
+
